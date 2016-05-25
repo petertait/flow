@@ -25,7 +25,7 @@ gulp.task('server', function(){
   var server = connect();
 
   server.use(connectLivereload({port: lrPort}));
-  server.use(serveStatic(path.src));
+  server.use(serveStatic(path.dist));
   server.listen(localPort);
 
   console.log("\nlocal server running at http://localhost:" + localPort + "/\n");
