@@ -13,23 +13,17 @@ client.authenticate({interactive: false}, function(error, client) {
       userName.innerHTML = accountInfo.name;
 
       client.readdir("/", function(error, thumbnailUrl) {
-        var array = thumbnailUrl.toString();
-        console.log(array);
-        // var gridImage = document.createElement("div");
+        console.log(thumbnailUrl)
+        var gridImage = document.createElement("div");
 
-        function handleImages(thumbnailUrl) {
-          for (var i = 0; i < thumbnailUrl.length; i++) {
-            var url = thumbnailUrl[i];
+        var dbImage = thumbnailUrl.length;
 
-            var gridImage = document.createElement("img");
-            img.classList.add("obj");
-            img.url = thumbnailUrl;
-            preview.appendChild(img);
-
-            document.body.insertBefore(gridImage, authBtn);
-          }
+        for (var i = 0, dbImage = thumbnailUrl.length; i < dbImage; i++) {
+          var url = thumbnailUrl[i];
+          gridImage.innerHTML = url;
         }
-        // document.body.insertBefore(gridImage, authBtn);
+
+        document.body.insertBefore(gridImage, authBtn);
       });
     });
 
