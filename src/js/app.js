@@ -1,33 +1,72 @@
 "use strict";
 
-var dbox = require('dbox');
-var app  = dbox.app({ "app_key": "qbryowo5frs09ht", "app_secret": "6vxj9idugg8qcg0" })
+var client = new Dropbox.Client({ key: "qbryowo5frs09ht" });
 
-app.requesttoken(function(status, request_token){
-  console.log(request_token)
-  url = 'https://www.dropbox.com/1/oauth/authorize?oauth_token=#{ request_token.oauth_token }'
-  window.location = url;
-})
+var showError = function(error) {
+  switch (error.status) {
+  case Dropbox.ApiError.INVALID_TOKEN:
+    // If you're using dropbox.js, the only cause behind this error is that
+    // the user token expired.
+    // Get the user through the authentication flow again.
+    break;
 
-app.accesstoken(request_token, function(status, access_token){
-  console.log(access_token)
-})
+  case Dropbox.ApiError.NOT_FOUND:
+    // The file or folder you tried to access is not in the user's Dropbox.
+    // Handling this error is specific to your application.
+    break;
 
-var client = app.client(access_token)
-client.account(function(status, reply){
-  console.log(reply)
-})
+  case Dropbox.ApiError.OVER_QUOTA:
+    // The user is over their Dropbox quota.
+    // Tell them their Dropbox is full. Refreshing the page won't help.
+    break;
 
-// if (window.location.href.indexOf("code=") === -1) {
-//
-//     window.location = url;
-//
-// } else {
-//   dropbox.AccessToken('qbryowo5frs09ht', '6vxj9idugg8qcg0', '-mBgh0aiy58AAAAAAACgiambSGhgDxV6D6KCVq5xNH0zI6IGYk9fQX5A_PHiHe8p', 'http://localhost:4000/home.html', function(err, body) {
-//   	var access_token = body.access_token;
-//     var api = dropbox.api(access_token);
-//     api.account(function(err, res, body) {
-//     	console.log(body);
-//     });
-//   });
-// }
+  case Dropbox.ApiError.RATE_LIMITED:
+    // Too many API requests. Tell the user to try again later.
+    // Long-term, optimize your code to use fewer API calls.
+    break;
+
+  case Dropbox.ApiError.NETWORK_ERROR:
+    // An error occurred at the XMLHttpRequest layer.
+    // Most likely, the user's network connection is down.
+    // API calls will not succeed until the user gets back online.
+    break;
+
+  case Dropbox.ApiError.INVALID_PARAM:
+  case Dropbox.ApiError.OAUTH_ERROR:
+  case Dropbox.ApiError.INVALID_METHOD:
+  default:
+    // Caused by a bug in dropbox.js, in your application, or in Dropbox.
+    // Tell the user an error occurred, ask them to refresh the page.
+  }
+};
+
+client.onError.addListener(function(error) {
+  if (window.console) {  // Skip the "if" in node.js code.
+    console.error(error);
+  }
+});
+
+
+client.authenticate({interactive: false}, function(error, client) {
+  if (client.isAuthenticated()) {
+
+    client.getAccountInfo(function(error, accountInfo) {
+      if (error) {
+        return showError(error);  // Something went wrong.
+      }
+
+      alert("Hello, " + accountInfo.name + "!");
+    });
+
+  } else {
+
+    // show and set up the "Sign into Dropbox" button
+    var authBtn = document.querySelector("#auth-signin");
+    authBtn.setAttribute("class", "visible");
+    authBtn.addEventListener("click", function() {
+      // The user will have to click an 'Authorize' button.
+      window.location
+    });
+
+  }
+});

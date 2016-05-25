@@ -14,7 +14,7 @@
     "autoprefixer": "^6.3.6",
     "connect": "^3.4.1",
     "connect-livereload": "^0.5.4",
-    "dbox": "^0.6.4",
+    "dropbox": "^0.10.3",
     "gulp": "^3.9.1",
     "gulp-browserify": "^0.5.1",
     "gulp-cssnano": "^2.1.2",
