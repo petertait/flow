@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     serveStatic = require('serve-static'),
     connectLivereload = require('connect-livereload'),
     gulpLivereload = require('gulp-livereload'),
+    webpack = require('webpack-stream'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     postcss = require('gulp-postcss'),
@@ -44,9 +45,12 @@ gulp.task('styles', function(){
 });
 
 gulp.task('scripts', function() {
-	gulp.src(['./src/js/vendor/*.js', './src/js/app.js'])
-    .pipe(concat('app.js'))
-    .pipe(uglify())
+	gulp.src(['./src/js/app.js'])
+    .pipe(webpack({
+        output: {
+          filename: 'app.js',
+        },
+      }))
     .pipe(gulp.dest(path.dist))
     .pipe(gulpLivereload());
 });
@@ -66,8 +70,8 @@ gulp.task('html', function(){
 
 gulp.task('watch', function(){
   gulp.watch(path.postcss, ['styles']);
-  gulp.watch(path.js, ['scripts']);
   gulp.watch(path.js, ['jshint']);
+  gulp.watch(path.js, ['scripts']);
   gulp.watch(path.html, ['html']);
 
   gulpLivereload.listen();
