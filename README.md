@@ -2,7 +2,9 @@
 
 Shows a stream of images from the Flowby dropbox folder.
 
-Uses old Dropbox v1 Datastore api: https://www.dropbox.com/developers-v1/datastore/docs/js
+Dropbox APIv2: https://dropbox.github.io/dropbox-api-v2-explorer/
+
+Javascript implementation of Dropbox APIv2 using Dropbox HTTP API: https://github.com/JamesMaroney/dropbox-js
 
 ### getting started
 

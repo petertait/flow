@@ -1,11 +1,12 @@
 "use strict";
 
 var gulp = require('gulp'),
-    browserify = require('gulp-browserify'),
     connect = require('connect'),
     serveStatic = require('serve-static'),
     connectLivereload = require('connect-livereload'),
     gulpLivereload = require('gulp-livereload'),
+    concat = require('gulp-concat'),
+    uglify = require('gulp-uglify'),
     postcss = require('gulp-postcss'),
     cssnano = require('gulp-cssnano'),
     jshint = require('gulp-jshint');
@@ -13,8 +14,8 @@ var gulp = require('gulp'),
 var path = {
        src: 'src/',
       html: 'src/**/*.html',
-        js: 'src/js/*.js',
-   postcss: 'src/css/**/*.css',
+        js: 'src/js/**/*.js',
+       css: 'src/css/styles.css',
       dist: 'dist/',
 }
 
@@ -32,7 +33,7 @@ gulp.task('server', function(){
 });
 
 gulp.task('styles', function(){
-  gulp.src('src/css/styles.css')
+  gulp.src(path.css)
     .pipe(postcss([
       require('precss'),
       require('autoprefixer')
@@ -43,20 +44,15 @@ gulp.task('styles', function(){
 });
 
 gulp.task('scripts', function() {
-	gulp.src('./src/js/app.js')
-		.pipe(browserify({
-		  insertGlobals : true,
-		  debug : !gulp.env.production
-		}))
-    .on('prebundle', function(bundle) {
-      bundle.external('domready');
-    })
-		.pipe(gulp.dest(path.dist))
+	gulp.src(['./src/js/vendor/*.js', './src/js/app.js'])
+    .pipe(concat('app.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest(path.dist))
     .pipe(gulpLivereload());
 });
 
 gulp.task('jshint', function(){
-  gulp.src(path.js)
+  gulp.src(path.src + 'js/app.js')
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(gulpLivereload());
