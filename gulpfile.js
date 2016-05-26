@@ -6,7 +6,6 @@ var gulp = require('gulp'),
     connectLivereload = require('connect-livereload'),
     gulpLivereload = require('gulp-livereload'),
     webpack = require('webpack-stream'),
-    concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     postcss = require('gulp-postcss'),
     cssnano = require('gulp-cssnano'),
@@ -25,11 +24,9 @@ var localPort = 4000,
 
 gulp.task('server', function(){
   var server = connect();
-
   server.use(connectLivereload({port: lrPort}));
   server.use(serveStatic(path.dist));
   server.listen(localPort);
-
   console.log("\nlocal server running at http://localhost:" + localPort + "/\n");
 });
 
@@ -51,6 +48,7 @@ gulp.task('scripts', function() {
           filename: 'app.js',
         },
       }))
+    .pipe(uglify())
     .pipe(gulp.dest(path.dist))
     .pipe(gulpLivereload());
 });
