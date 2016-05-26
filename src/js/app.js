@@ -1,42 +1,48 @@
+"use strict";
+
 var client = new Dropbox.Client({ key: "qbryowo5frs09ht" });
-var authBtn = document.querySelector("#auth-signin");
 
 client.authenticate({interactive: false}, function(error, client) {
   if (client.isAuthenticated()) {
 
     client.getAccountInfo(function(error, accountInfo) {
       if (error) {
-        return showError(error);  // Something went wrong.
+        console.log("error");
       }
 
       var userName = document.querySelector(".user");
       userName.innerHTML = accountInfo.name;
 
       client.readdir("/", function(error, thumbnailUrl) {
-        var array = thumbnailUrl.toString();
-        console.log(array);
-        // var gridImage = document.createElement("div");
+        for (var i = 0; i < 2; i++) {
+          var streamImage = document.createElement("img");
+          streamImage.classList.add("stream-image");
+          streamImage.src = thumbnailUrl;
 
-        function handleImages(thumbnailUrl) {
-          for (var i = 0; i < thumbnailUrl.length; i++) {
-            var url = thumbnailUrl[i];
-
-            var gridImage = document.createElement("img");
-            img.classList.add("obj");
-            img.url = thumbnailUrl;
-            preview.appendChild(img);
-
-            document.body.insertBefore(gridImage, authBtn);
-          }
+          var stream = document.querySelector(".stream");
+          stream.appendChild(streamImage);
         }
-        // document.body.insertBefore(gridImage, authBtn);
+      });
+    });
+
+    var authBtn = document.querySelector(".btn-signout");
+    authBtn.setAttribute("class", "visible");
+    authBtn.addEventListener("click", function() {
+      client.signOut( function(error) {
+        if (error) {
+          console.log("error");
+        }
       });
     });
 
   } else {
+    var authBtn = document.querySelector(".btn-signin");
     authBtn.setAttribute("class", "visible");
     authBtn.addEventListener("click", function() {
-
+      console("login");
     });
   }
 });
+
+// handleImages(thumbnailUrl);
+// function handleImages(thumbnailUrl) {}

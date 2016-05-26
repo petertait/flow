@@ -1,6 +1,8 @@
-# Barebones gulp project
+# Flowby
 
-Barebones gulp.js project. Gives you local server, liveReload, postcss, & jshint.
+Shows a stream of images from the Flowby dropbox folder.
+
+Uses old Dropbox v1 Datastore api: https://www.dropbox.com/developers-v1/datastore/docs/js
 
 ### getting started
 
