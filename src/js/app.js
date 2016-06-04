@@ -1,14 +1,10 @@
-"use strict";
+dropbox.authenticate( { client_id: 'qbryowo5frs09ht' }, function(){
+  dropbox('files/list_folder', {path: ''}, function(result) {
+     console.log(result.entries);
+     console.log(result.entries.path_lower);
+  });
 
-var client = new Dropbox.Client({
-  key: "qbryowo5frs09ht",
-  secret: "6vxj9idugg8qcg0"
-});
-
-client.authenticate(function(error, client) {
-  console.log("Success");
-});
-
-client.readdir("/home.html", function(error, entries) {
-  alert("Your Dropbox contains " + entries.join(", "));
+  // dropbox('files/get_preview', {path: ''}, function(path) {
+  //    console.log(path);
+  // });
 });

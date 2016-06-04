@@ -1,29 +1,29 @@
 {
-  "name": "barebones-gulp-project",
+  "name": "Flowby",
   "version": "0.1.0",
-  "author": "pebble {code}",
+  "author": "Peter Tait",
   "description": "gulp, localhost, livereload, postcss, jshint",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pebblecode/pebble-gulp-base"
+    "url": "https://github.com/petertait/flowby"
   },
   "scripts": {
-    "install": "gulp styles"
+    "install": "gulp styles scripts"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.6",
     "connect": "^3.4.1",
     "connect-livereload": "^0.5.4",
-    "dropbox": "^0.10.3",
+    "es6-promise": "^3.2.1",
     "gulp": "^3.9.1",
-    "gulp-browserify": "^0.5.1",
     "gulp-cssnano": "^2.1.2",
     "gulp-jshint": "^2.0.0",
     "gulp-livereload": "^3.8.1",
     "gulp-postcss": "^6.1.0",
+    "gulp-uglify": "^1.5.3",
     "jshint": "^2.9.2",
-    "postcss-reporter": "^1.3.3",
     "precss": "^1.4.0",
-    "serve-static": "^1.10.2"
+    "serve-static": "^1.10.2",
+    "webpack-stream": "^3.2.0"
   }
 }
