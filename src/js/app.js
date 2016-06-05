@@ -10,24 +10,10 @@ dropbox.authenticate( { client_id: 'qbryowo5frs09ht' }, function(){
 
       resultPreview = document.createElement('img');
       resultPreview.classList.add('preview');
-      // resultPreview.setAttribute("src", file/path_lower);
+      resultPreview.setAttribute("src", result.path_lower);
 
       stream.appendChild(resultPreview);
     }
 
-    var list = function(obj) {
-      for(var prop in obj) {
-        console.log(prop);
-      }
-    };
-
-    list(path_lower);
-
   });
-
-
-
-  // dropbox('files/get_preview', {path: ''}, function(path) {
-  //    console.log(path);
-  // });
 });
