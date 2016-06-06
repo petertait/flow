@@ -1,2 +1,4 @@
 node_modules
-dist
+dist/app.js
+dist/styles.css
+dist/index.html
