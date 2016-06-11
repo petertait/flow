@@ -19,7 +19,7 @@ var path = {
       dist: 'dist/',
 }
 
-var localPort = 4000,
+var localPort = 7000,
        lrPort = 35729;
 
 gulp.task('server', function(){
