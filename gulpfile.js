@@ -5,7 +5,7 @@ var gulp = require('gulp'),
     serveStatic = require('serve-static'),
     connectLivereload = require('connect-livereload'),
     gulpLivereload = require('gulp-livereload'),
-    webpack = require('webpack-stream'),
+    // webpack = require('webpack-stream'),
     uglify = require('gulp-uglify'),
     postcss = require('gulp-postcss'),
     cssnano = require('gulp-cssnano'),
@@ -36,29 +36,29 @@ gulp.task('styles', function(){
       require('precss'),
       require('autoprefixer')
     ]))
-    .pipe(cssnano())
+    // .pipe(cssnano())
     .pipe(gulp.dest(path.dist))
     .pipe(gulpLivereload());
 });
 
 gulp.task('scripts', function() {
 	gulp.src(['./src/js/app.js'])
-    .pipe(webpack({
-        output: {
-          filename: 'app.js',
-        },
-      }))
-    .pipe(uglify())
+    // .pipe(webpack({
+    //     output: {
+    //       filename: 'app.js',
+    //     },
+    //   }))
+    // .pipe(uglify())
     .pipe(gulp.dest(path.dist))
     .pipe(gulpLivereload());
 });
 
-gulp.task('jshint', function(){
-  gulp.src(path.src + 'js/app.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'))
-    .pipe(gulpLivereload());
-});
+// gulp.task('jshint', function(){
+//   gulp.src(path.src + 'js/app.js')
+//     .pipe(jshint())
+//     .pipe(jshint.reporter('default'))
+//     .pipe(gulpLivereload());
+// });
 
 gulp.task('html', function(){
   gulp.src(path.html)
@@ -68,7 +68,7 @@ gulp.task('html', function(){
 
 gulp.task('watch', function(){
   gulp.watch(path.postcss, ['styles']);
-  gulp.watch(path.js, ['jshint']);
+  // gulp.watch(path.js, ['jshint']);
   gulp.watch(path.js, ['scripts']);
   gulp.watch(path.html, ['html']);
 
